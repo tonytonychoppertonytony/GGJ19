@@ -6,6 +6,8 @@ public class Player_movement : MonoBehaviour
 
     public float speed = 100;             //Floating point variable to store the player's movement speed.
     public float Stamina = 10.0f;
+    public bool isJumping;
+    public bool isCrouching;
     public float MaxStamina = 10.0f;
     private float StaminaRegenTimer = 0.0f;//the timer to count the delay
     private const float StaminaDecreasePerFrame = 7.0f;
@@ -34,9 +36,25 @@ public class Player_movement : MonoBehaviour
     {
         //Store the current horizontal input in the float moveHorizontal.
         float moveHorizontal = Input.GetAxis("Horizontal");
+        if (Input.GetKeyDown(KeyCode.Space) && isJumping == false)
+        {
+            rb2d.AddForce(new Vector2(0, 3000));
+            isJumping = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isCrouching = true;
+            speed = 75;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            isCrouching = false;
+            speed = 150;
+        }
 
         //Store the current vertical input in the float moveVertical.
-       // float moveVertical = Input.GetAxis("Vertical");
+        // float moveVertical = Input.GetAxis("Vertical");
 
         //Use the two store floats to create a new Vector2 variable movement.
         Vector2 movement = new Vector2(moveHorizontal, 0);
@@ -56,13 +74,13 @@ public class Player_movement : MonoBehaviour
         bool isRunning = Input.GetKey(KeyCode.LeftShift); //creates a boolean if left shift is held
         if (isRunning && Stamina > 0) //bool is true and stamina is above 0
         {
-            speed = 100;
+            speed = 300;
             Stamina = Mathf.Clamp(Stamina - (StaminaDecreasePerFrame * Time.deltaTime), 0.0f, MaxStamina); //stamina decreases
             StaminaRegenTimer = 0.0f; //regen timer is set to 0 so you don't regen stamina
         }
         else if (Stamina < MaxStamina)
         {
-            speed = 50;
+            speed = 150;
             if (StaminaRegenTimer >= StaminaTimeToRegen) //once the regen timer (below) is above the set time to regen then stamina increases
                 Stamina = Mathf.Clamp(Stamina + (StaminaIncreasePerFrame * Time.deltaTime), 0.0f, MaxStamina); 
             else
@@ -119,6 +137,14 @@ public class Player_movement : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "inviswall")
+        {
+            isJumping = false;
+        }
+    }
 
-    
+
+
 }

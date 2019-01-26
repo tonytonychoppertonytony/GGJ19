@@ -20,7 +20,10 @@ public class Chase : MonoBehaviour {
             
             if (Vector2.Distance(transform.position, target.position) < range)
             {
-                transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
+            Vector2 MovePos = new Vector2((target.position.x - transform.position.x) * speed, 0); 
+            transform.position = MovePos; 
+             //   transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             }
 
     }
