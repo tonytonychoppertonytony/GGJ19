@@ -36,7 +36,7 @@ public class Player_movement : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
 
         //Store the current vertical input in the float moveVertical.
-        float moveVertical = Input.GetAxis("Vertical");
+       // float moveVertical = Input.GetAxis("Vertical");
 
         //Use the two store floats to create a new Vector2 variable movement.
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
