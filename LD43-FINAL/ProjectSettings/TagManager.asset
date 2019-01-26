@@ -9,6 +9,9 @@ TagManager:
   - inviswall
   - player_bullet
   - enemy
+  - wall
+  - head
+  - Door1
   layers:
   - Default
   - TransparentFX

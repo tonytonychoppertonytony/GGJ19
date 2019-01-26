@@ -8,6 +8,9 @@ public class shooter : MonoBehaviour {
     public GameObject bullet;
     private Transform playerPos;
     public static int ammo;
+    private Transform target;
+    private float offset;
+    private int BF;
     public GameObject Ammo1, Ammo2, Ammo3, Ammo4, Ammo5, Ammo6, Ammo7, Ammo8, Ammo9, Ammo10;
 
     // Use this for initialization
@@ -28,15 +31,27 @@ public class shooter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-    if(ammo > 10)
+
+        target = GameObject.FindGameObjectWithTag("Player_1").GetComponent<Transform>();
+        offset = transform.position.x - target.position.x;
+        if (offset < 0)
+        {
+            BF = -1;
+        }
+        if (offset > 0)
+        {
+            BF = 1;
+        }
+        if (ammo > 10)
         {
             ammo = 10;
         }
     if (ammo  > 0) {         
         if (Input.GetMouseButtonDown(0))
          {
-           Instantiate(bullet, playerPos.position, Quaternion.identity);
+           Instantiate(bullet, playerPos.position * BF, Quaternion.identity);
                 ammo = ammo - 1;
+                print("bulletshot");
          }
         }
 

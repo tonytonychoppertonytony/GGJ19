@@ -11,14 +11,12 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       // target = new Vector2(100000000, 0);
     }
 
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-
-        
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
     void OnCollisionEnter2D(Collision2D coll)

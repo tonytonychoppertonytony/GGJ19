@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player_movement : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class Player_movement : MonoBehaviour
     public float Stamina = 10.0f;
     public bool isJumping;
     public bool isCrouching;
+    private bool launch;
+    public bool inDoorOne = false;
     public float MaxStamina = 10.0f;
     private float StaminaRegenTimer = 0.0f;//the timer to count the delay
     private const float StaminaDecreasePerFrame = 7.0f;
@@ -34,12 +37,26 @@ public class Player_movement : MonoBehaviour
     //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
     void FixedUpdate()
     {
+        //new level
+        if (Input.GetKey(KeyCode.E)){
+            if (inDoorOne == true)
+            {
+                SceneManager.LoadScene("movement");
+                Time.timeScale = 1;
+            }
+        }
+
+
         //Store the current horizontal input in the float moveHorizontal.
         float moveHorizontal = Input.GetAxis("Horizontal");
         if (Input.GetKeyDown(KeyCode.Space) && isJumping == false)
         {
             rb2d.AddForce(new Vector2(0, 3000));
             isJumping = true;
+        }
+        if (launch == true)
+        {
+            rb2d.AddForce(new Vector2(0, 300));
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -142,9 +159,25 @@ public class Player_movement : MonoBehaviour
         if (coll.gameObject.tag == "inviswall")
         {
             isJumping = false;
+            launch = false;
         }
-    }
 
+        if (coll.gameObject.tag == "head")
+        {
+            launch = true;
+            print("no");
+        }
+
+        if (coll.gameObject.tag == "Door1")
+        {
+            inDoorOne = true;
+            print("in door one true");
+        }
+        else {
+            print("out door1");
+        }
+
+    }
 
 
 }
