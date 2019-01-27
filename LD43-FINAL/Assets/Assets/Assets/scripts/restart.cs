@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class restart : MonoBehaviour {
 
-public void RestartGame()
+public void restartScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Movement");
         Time.timeScale = 1;
     }
 }

@@ -11,6 +11,7 @@ public class Player_movement : MonoBehaviour
     public bool isCrouching;
     private bool launch;
     public bool inDoorOne = false;
+    public bool endLevel = false;
     public float MaxStamina = 10.0f;
     private float StaminaRegenTimer = 0.0f;//the timer to count the delay
     private const float StaminaDecreasePerFrame = 7.0f;
@@ -44,7 +45,14 @@ public class Player_movement : MonoBehaviour
                 SceneManager.LoadScene("movement");
                 Time.timeScale = 1;
             }
+            if (endLevel == true)
+            {
+                SceneManager.LoadScene("SampleScene");
+                Time.timeScale = 1;
+            }
         }
+
+
 
 
         //Store the current horizontal input in the float moveHorizontal.
@@ -174,7 +182,16 @@ public class Player_movement : MonoBehaviour
             print("in door one true");
         }
         else {
-            print("out door1");
+            inDoorOne = false;
+        }
+
+        if (coll.gameObject.tag == "end")
+        {
+            endLevel = true;
+        }
+        else
+        {
+            endLevel = false;
         }
 
     }

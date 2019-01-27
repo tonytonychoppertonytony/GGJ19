@@ -13,8 +13,9 @@ public class SeeChase : MonoBehaviour
     private Transform target;
     private Rigidbody2D enermyrb2d;
 
-    private bool movingRight = true;
+    private bool movingRight;
     private bool movingLeft = false;
+    public bool switchW = false;
     public Transform groundDetection;
 
     // Use this for initialization
@@ -23,6 +24,7 @@ public class SeeChase : MonoBehaviour
 
         enermyrb2d = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player_1").GetComponent<Transform>();
+        movingRight = true;
 
         //Makes the enemy find the player object
     }
@@ -51,10 +53,13 @@ public class SeeChase : MonoBehaviour
             {
                 transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
             }
-           else
+            if (movingRight == false)
             {
-                transform.Translate(Vector2.left * -patrolSpeed * Time.deltaTime);
+                transform.Translate(Vector2.right * patrolSpeed * Time.deltaTime);
+                print("left");
+
             }
+
         }
         RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, distance);
         if (groundInfo.collider == false)
@@ -64,7 +69,7 @@ public class SeeChase : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, -180, 0);
                 movingRight = false;
                 movingLeft = true;
-                print("moving left");
+                //print("moving left");
             } 
             else
             {
@@ -74,27 +79,39 @@ public class SeeChase : MonoBehaviour
             }
         }
 
+        if (switchW == true && movingRight == true)
+            {
+            transform.eulerAngles = new Vector3(0, -180, 0);
+            movingRight = false;
+            switchW = false;
+            //print("moving left");
+        }
+        if (switchW == true && movingRight == false)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            movingRight = false;
+            switchW = false;
+            //print("moving left");
+        }
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.tag == "wall")
         {
-            if (movingRight == true)
-            {
-                movingLeft = true;
-                movingRight = false;
-            }
-            if (movingRight == false)
-            {
-                movingLeft = false;
-                movingRight = true;
-            }
+            switchW = true;
+            print("ech");
         }
 
         if (coll.gameObject.tag == "Player_1")
         {
             enermyrb2d.AddForce(new Vector2(300, 300));
+        }
+        if (coll.gameObject.tag == "enemy")
+        {
+
+            switchW = true;
+        
         }
     }
 
