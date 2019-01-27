@@ -12,6 +12,9 @@ TagManager:
   - wall
   - head
   - Door1
+  - end
+  - Door2
+  - Door3
   layers:
   - Default
   - TransparentFX

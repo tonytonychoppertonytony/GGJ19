@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class restart : MonoBehaviour {
 
-public void restartScene()
+public void RestartScene()
     {
-        SceneManager.LoadScene("Movement");
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
         Time.timeScale = 1;
     }
 }

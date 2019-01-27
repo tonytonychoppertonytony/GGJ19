@@ -11,6 +11,7 @@ public class Player_movement : MonoBehaviour
     public bool isCrouching;
     private bool launch;
     public bool inDoorOne = false;
+    public bool inDoorTwo = false;
     public bool endLevel = false;
     public float MaxStamina = 10.0f;
     private float StaminaRegenTimer = 0.0f;//the timer to count the delay
@@ -38,11 +39,17 @@ public class Player_movement : MonoBehaviour
     //FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
     void FixedUpdate()
     {
+
         //new level
         if (Input.GetKey(KeyCode.E)){
             if (inDoorOne == true)
             {
-                SceneManager.LoadScene("movement");
+                SceneManager.LoadScene("level1");
+                Time.timeScale = 1;
+            }
+            if (inDoorTwo == true)
+            {
+                SceneManager.LoadScene("level2");
                 Time.timeScale = 1;
             }
             if (endLevel == true)
@@ -183,6 +190,15 @@ public class Player_movement : MonoBehaviour
         }
         else {
             inDoorOne = false;
+        }
+        if (coll.gameObject.tag == "Door2")
+        {
+            inDoorTwo = true;
+            print("in door one true");
+        }
+        else
+        {
+            inDoorTwo = false;
         }
 
         if (coll.gameObject.tag == "end")

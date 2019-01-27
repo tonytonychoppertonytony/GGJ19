@@ -14,6 +14,7 @@ public class enemyDamage : MonoBehaviour {
         if (coll.gameObject.tag == "Player_1")
         {
             GameControlScript.health -= 1;
+            print("nice");
         }
         
     }

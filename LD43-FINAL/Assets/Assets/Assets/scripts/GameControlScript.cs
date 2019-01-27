@@ -10,6 +10,7 @@ public class GameControlScript : MonoBehaviour {
 
     void Start ()
     {
+        Time.timeScale = 1;
         health = 3;
         Heart1.gameObject.SetActive(true);
         Heart2.gameObject.SetActive(true);
